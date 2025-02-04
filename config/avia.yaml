@@ -1,85 +1,85 @@
 common:
-  img_topic: "/left_camera/image"
-  lid_topic: "/livox/lidar"
-  imu_topic: "/livox/imu"
-  img_en: 1
-  lidar_en: 1
-  ros_driver_bug_fix: false
+  img_topic: "/left_camera/image"  # 左侧相机图像话题
+  lid_topic: "/livox/lidar"         # LiDAR数据话题
+  imu_topic: "/livox/imu"           # IMU数据话题
+  img_en: 1                          # 是否启用图像处理 (1: 启用, 0: 不启用)
+  lidar_en: 1                        # 是否启用LiDAR处理 (1: 启用, 0: 不启用)
+  ros_driver_bug_fix: false          # 是否启用ROS驱动程序的bug修复
 
 extrin_calib:
-  extrinsic_T: [0.04165, 0.02326, -0.0284]
-  extrinsic_R: [1, 0, 0, 0, 1, 0, 0, 0, 1]
-  Rcl: [0.00610193,-0.999863,-0.0154172,
+  extrinsic_T: [0.04165, 0.02326, -0.0284]  # 外部标定平移向量
+  extrinsic_R: [1, 0, 0, 0, 1, 0, 0, 0, 1]  # 外部标定旋转矩阵
+  Rcl: [0.00610193,-0.999863,-0.0154172,    # 相机到LiDAR的旋转矩阵
         -0.00615449,0.0153796,-0.999863,
         0.999962,0.00619598,-0.0060598] 
-  Pcl: [0.0194384, 0.104689,-0.0251952]
+  Pcl: [0.0194384, 0.104689,-0.0251952]      # 相机到LiDAR的平移向量
 
 time_offset: 
-  imu_time_offset: 0.0
-  img_time_offset: 0.1
-  exposure_time_init: 0.0
+  imu_time_offset: 0.0               # IMU时间偏移
+  img_time_offset: 0.1                # 图像时间偏移
+  exposure_time_init: 0.0             # 初始曝光时间
 
 preprocess:
-  point_filter_num: 1
-  filter_size_surf: 0.1
-  lidar_type: 1 # Livox Avia LiDAR
-  scan_line: 6
-  blind: 0.8
+  point_filter_num: 1                 # 点云过滤数量
+  filter_size_surf: 0.1               # 表面过滤大小
+  lidar_type: 1                       # LiDAR类型 (1: Livox Avia LiDAR)
+  scan_line: 6                        # 扫描线数量
+  blind: 0.8                          # 盲区设置
 
 vio:
-  max_iterations: 5
-  outlier_threshold: 1000 # 78 100 156 #100 200 500 700 infinite
-  img_point_cov: 100 # 100 1000 
-  patch_size: 8
-  patch_pyrimid_level: 4
-  normal_en: true
-  raycast_en: false
-  inverse_composition_en: false
-  exposure_estimate_en: true
-  inv_expo_cov: 0.1
+  max_iterations: 5                   # 最大迭代次数
+  outlier_threshold: 1000             # 异常值阈值
+  img_point_cov: 100                  # 图像点协方差
+  patch_size: 8                       # 补丁大小
+  patch_pyrimid_level: 4              # 金字塔层级
+  normal_en: true                     # 是否启用法线计算
+  raycast_en: false                   # 是否启用光线投射
+  inverse_composition_en: false       # 是否启用逆合成
+  exposure_estimate_en: true          # 是否启用曝光估计
+  inv_expo_cov: 0.1                   # 逆曝光协方差
 
 imu:
-  imu_en: true
-  imu_int_frame: 30
-  acc_cov: 0.5 # 0.2
-  gyr_cov: 0.3 # 0.5
-  b_acc_cov: 0.0001 # 0.1
-  b_gyr_cov: 0.0001 # 0.1
+  imu_en: true                        # 是否启用IMU
+  imu_int_frame: 30                   # IMU集成帧数
+  acc_cov: 0.5                        # 加速度计协方差
+  gyr_cov: 0.3                        # 陀螺仪协方差
+  b_acc_cov: 0.0001                   # 基础加速度计协方差
+  b_gyr_cov: 0.0001                   # 基础陀螺仪协方差
 
 lio:
-  max_iterations: 5
-  dept_err: 0.02
-  beam_err: 0.05
-  min_eigen_value: 0.0025 # 0.005
-  voxel_size: 0.5
-  max_layer: 2
-  max_points_num: 50
-  layer_init_num: [5, 5, 5, 5, 5]
+  max_iterations: 5                   # 最大迭代次数
+  dept_err: 0.02                      # 深度误差
+  beam_err: 0.05                      # 光束误差
+  min_eigen_value: 0.0025             # 最小特征值
+  voxel_size: 0.5                     # 体素大小
+  max_layer: 2                        # 最大层数
+  max_points_num: 50                  # 最大点数
+  layer_init_num: [5, 5, 5, 5, 5]    # 每层初始点数
 
 local_map:  
-  map_sliding_en: false
-  half_map_size: 100
-  sliding_thresh: 8
+  map_sliding_en: false               # 是否启用地图滑动
+  half_map_size: 100                  # 半地图大小
+  sliding_thresh: 8                   # 滑动阈值
 
 uav:
-  imu_rate_odom: false
-  gravity_align_en: false
+  imu_rate_odom: false                # 是否启用IMU速率里程计
+  gravity_align_en: false             # 是否启用重力对齐
 
 publish:
-  dense_map_en: true
-  pub_effect_point_en: false 
-  pub_plane_en: false
-  pub_scan_num: 1
-  blind_rgb_points: 0.0
+  dense_map_en: true                  # 是否启用密集地图发布
+  pub_effect_point_en: false          # 是否发布有效点
+  pub_plane_en: false                 # 是否发布平面
+  pub_scan_num: 1                     # 发布扫描数量
+  blind_rgb_points: 0.0               # 盲区RGB点
 
 evo:
-  seq_name: "CBD_Building_01"
-  pose_output_en: false
+  seq_name: "CBD_Building_01"         # 序列名称
+  pose_output_en: false                # 是否启用姿态输出
 
 pcd_save:
-  pcd_save_en: false
-  colmap_output_en: false # need to set interval = -1
-  filter_size_pcd: 0.15
-  interval: -1
-  # how many LiDAR frames saved in each pcd file;
-  # -1 : all frames will be saved in ONE pcd file, may lead to memory crash when having too much frames.
+  pcd_save_en: false                   # 是否启用PCD保存
+  colmap_output_en: false              # 是否启用Colmap输出
+  filter_size_pcd: 0.15                # PCD过滤大小
+  interval: -1                         # 保存间隔
+  # 每个PCD文件保存的LiDAR帧数;
+  # -1 : 所有帧将保存在一个PCD文件中，当有太多帧时可能导致内存崩溃。
